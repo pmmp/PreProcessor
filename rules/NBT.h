@@ -5,8 +5,8 @@ use pocketmine\utils\Binary;
 #define $nbt->getLong() $nbt->endianness === 1 ? Binary::readLong($nbt->get(8)) : Binary::readLLong($nbt->get(8))
 #define $nbt->putLong(data) $nbt->buffer .= $nbt->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data)
 
-#define $nbt->getInt() $nbt->endianness === 1 ? Binary::readInt($nbt->get(4)) : Binary::readLInt($nbt->get(4))
-#define $nbt->putInt(data) $nbt->buffer .= $nbt->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data)
+#define $nbt->getInt(network) network === true ? Binary::readVarInt($nbt->get(4)) : ($nbt->endianness === 1 ? Binary::readInt($nbt->get(4)) : Binary::readLInt($nbt->get(4)))
+#define $nbt->putInt(data, network) $nbt->buffer .= network === true ? Binary::writeVarInt(data) : ($nbt->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data))
 
 #define $nbt->getShort() $nbt->endianness === 1 ? Binary::readShort($nbt->get(2)) : Binary::readLShort($nbt->get(2))
 #define $nbt->getSignedShort() $nbt->endianness === 1 ? Binary::readSignedShort($nbt->get(2)) : Binary::readSignedLShort($nbt->get(2))
@@ -26,8 +26,9 @@ use pocketmine\utils\Binary;
 #define $this->getLong() $this->endianness === 1 ? Binary::readLong($this->get(8)) : Binary::readLLong($this->get(8))
 #define $this->putLong(data) $this->buffer .= $this->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data)
 
-#define $this->getInt() $this->endianness === 1 ? Binary::readInt($this->get(4)) : Binary::readLInt($this->get(4))
-#define $this->putInt(data) $this->buffer .= $this->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data)
+#define $this->getInt(network) network === true ? Binary::readVarInt($this->get(4)) : ($this->endianness === 1 ? Binary::readInt($this->get(4)) : Binary::readLInt($this->get(4)))
+#define $this->putInt(data, network) $this->buffer .= network === true ? Binary::writeVarInt(data) : ($this->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data))
+
 
 #define $this->getShort() $this->endianness === 1 ? Binary::readShort($this->get(2)) : Binary::readLShort($this->get(2))
 #define $this->getSignedShort() $this->endianness === 1 ? Binary::readSignedShort($this->get(2)) : Binary::readSignedLShort($this->get(2))
