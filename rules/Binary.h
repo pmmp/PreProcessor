@@ -1,16 +1,16 @@
 
 #ifdef COMPILE_64
-#define Binary::readSignedShort(data) unpack("n", data)[1] << 48 >> 48
-#define Binary::readSignedLShort(data) unpack("v", data)[1] << 48 >> 48
-#define Binary::readInt(data) unpack("N", data)[1] << 32 >> 32
-#define Binary::readLInt(data) unpack("V", data)[1] << 32 >> 32
-#define Binary::writeLong(data) pack("NN", data >> 32, data & 0xFFFFFFFF)
+#define Binary::readSignedShort(data) (unpack("n", data)[1] << 48 >> 48)
+#define Binary::readSignedLShort(data) (unpack("v", data)[1] << 48 >> 48)
+#define Binary::readInt(data) (unpack("N", data)[1] << 32 >> 32)
+#define Binary::readLInt(data) (unpack("V", data)[1] << 32 >> 32)
+#define Binary::writeLong(data) (pack("NN", data >> 32, data & 0xFFFFFFFF))
 #else
 #ifdef COMPILE_32
-#define Binary::readSignedShort(data) unpack("n", data)[1] << 16 >> 16
-#define Binary::readSignedLShort(data) unpack("v", data)[1] << 16 >> 16
-#define Binary::readInt(data) unpack("N", data)[1]
-#define Binary::readLInt(data) unpack("V", data)[1]
+#define Binary::readSignedShort(data) (unpack("n", data)[1] << 16 >> 16)
+#define Binary::readSignedLShort(data) (unpack("v", data)[1] << 16 >> 16)
+#define Binary::readInt(data) (unpack("N", data)[1])
+#define Binary::readLInt(data) (unpack("V", data)[1])
 #else
 #define Binary::readSignedShort(data) (PHP_INT_SIZE === 8 ? unpack("n", data)[1] << 48 >> 48 : unpack("n", data)[1] << 16 >> 16)
 #define Binary::readSignedLShort(data) (PHP_INT_SIZE === 8 ? unpack("v", data)[1] << 48 >> 48 : unpack("v", data)[1] << 16 >> 16)
@@ -20,25 +20,25 @@
 #endif
 
 #define Binary::readTriad(data) unpack("N", "\x00" . data)[1]
-#define Binary::writeTriad(data) substr(pack("N", data), 1)
+#define Binary::writeTriad(data) (substr(pack("N", data), 1))
 
 #define Binary::readLTriad(data) unpack("V", data . "\x00")[1]
-#define Binary::writeLTriad(data) substr(pack("V", data), 0, -1)
+#define Binary::writeLTriad(data) (substr(pack("V", data), 0, -1))
 
-#define Binary::readBool(data) ord(data{0}) > 0 ? true : false
-#define Binary::writeBool(data) chr(data ? 1 : 0)
+#define Binary::readBool(data) (ord(data{0}) > 0 ? true : false)
+#define Binary::writeBool(data) (chr(data ? 1 : 0))
 
-#define Binary::readByte(data) ord(data)
-#define Binary::writeByte(data) chr(data)
+#define Binary::readByte(data) (ord(data))
+#define Binary::writeByte(data) (chr(data))
 
-#define Binary::readShort(data) unpack("n", data)[1]
-#define Binary::readLShort(data) unpack("v", data)[1]
-#define Binary::writeShort(data) pack("n", data)
-#define Binary::writeLShort(data) pack("v", data)
+#define Binary::readShort(data) (unpack("n", data)[1])
+#define Binary::readLShort(data) (unpack("v", data)[1])
+#define Binary::writeShort(data) (pack("n", data))
+#define Binary::writeLShort(data) (pack("v", data))
 
-#define Binary::writeInt(data) pack("N", data)
+#define Binary::writeInt(data) (pack("N", data))
 
-#define Binary::writeLInt(data) pack("V", data)
+#define Binary::writeLInt(data) (pack("V", data))
 
 #define Binary::readFloat(data) (ENDIANNESS === 0 ? unpack("f", data)[1] : unpack("f", strrev(data))[1])
 #define Binary::writeFloat(data) (ENDIANNESS === 0 ? pack("f", data) : strrev(pack("f", data)))

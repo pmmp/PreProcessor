@@ -10,8 +10,8 @@
 #define Level::getBlockXYZ(hash, X, Y, Z) X = (hash >> 35) << 36 >> 36; Y = ((hash >> 28) & 0x7f); Z = (hash & 0xFFFFFFF) << 36 >> 36;
 #else
 #ifdef COMPILE_32
-#define Level::chunkHash(chunkX, chunkZ) (chunkX) . ":" . (chunkZ)
-#define Level::blockHash(x, y, z) (x) . ":" . (y) .":". (z)
+#define Level::chunkHash(chunkX, chunkZ) ((chunkX) . ":" . (chunkZ))
+#define Level::blockHash(x, y, z) ((x) . ":" . (y) .":". (z))
 #define Level::getXZ(hash, chunkX, chunkZ) list(chunkX, chunkZ) = explode(":", hash); chunkX = (int) chunkX; chunkZ = (int) chunkZ;
 #define Level::getBlockXYZ(hash, X, Y, Z) list(X, Y, Z) = explode(":", hash); X = (int) X; Y = (int) Y; Z = (int) Z;
 #else
