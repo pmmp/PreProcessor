@@ -10,12 +10,12 @@
 #define $this->getSignedShort() (Binary::readSignedShort($this->get(2)))
 #define $this->putShort(data) ($this->buffer .= Binary::writeShort(data))
 
-//#define $this->getFloat() (Binary::readFloat($this->get(4)))
-//#define $this->getFloat(accuracy) (Binary::readFloat($this->get(4), accuracy))
+#define $this->getFloat() (Binary::readFloat($this->get(4)))
+#define $this->getRoundedFloat(accuracy) (Binary::readRoundedFloat($this->get(4), accuracy))
 #define $this->putFloat(data) ($this->buffer .= Binary::writeFloat(data))
 
-//#define $this->getLFloat() (Binary::readLFloat($this->get(4)))
-//#define $this->getLFloat(accuracy) (Binary::readLFloat($this->get(4), accuracy))
+#define $this->getLFloat() (Binary::readLFloat($this->get(4)))
+#define $this->getRoundedLFloat(accuracy) (Binary::readRoundedLFloat($this->get(4), accuracy))
 #define $this->putLFloat(data) ($this->buffer .= Binary::writeLFloat(data))
 
 #define $this->getTriad() (Binary::readTriad($this->get(3)))
