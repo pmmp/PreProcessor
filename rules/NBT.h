@@ -5,7 +5,7 @@ use pocketmine\utils\Binary;
 #define $nbt->getLong() ($nbt->endianness === 1 ? Binary::readLong($nbt->get(8)) : Binary::readLLong($nbt->get(8)))
 #define $nbt->putLong(data) ($nbt->buffer .= $nbt->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data))
 
-#define $nbt->getInt(network) (network === true ? Binary::readVarInt($nbt) : ($nbt->endianness === 1 ? Binary::readInt($nbt->get(4)) : Binary::readLInt($nbt->get(4))))
+#define $nbt->getInt(network) (network === true ? Binary::readVarInt($nbt->buffer, $nbt->offset) : ($nbt->endianness === 1 ? Binary::readInt($nbt->get(4)) : Binary::readLInt($nbt->get(4))))
 #define $nbt->putInt(data, network) ($nbt->buffer .= network === true ? Binary::writeVarInt(data) : ($nbt->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data)))
 
 #define $nbt->getShort() ($nbt->endianness === 1 ? Binary::readShort($nbt->get(2)) : Binary::readLShort($nbt->get(2)))
@@ -26,7 +26,7 @@ use pocketmine\utils\Binary;
 #define $this->getLong() ($this->endianness === 1 ? Binary::readLong($this->get(8)) : Binary::readLLong($this->get(8)))
 #define $this->putLong(data) ($this->buffer .= $this->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data))
 
-#define $this->getInt(network) (network === true ? Binary::readVarInt($this) : ($this->endianness === 1 ? Binary::readInt($this->get(4)) : Binary::readLInt($this->get(4))))
+#define $this->getInt(network) (network === true ? Binary::readVarInt($this->buffer, $this->offset) : ($this->endianness === 1 ? Binary::readInt($this->get(4)) : Binary::readLInt($this->get(4))))
 #define $this->putInt(data, network) ($this->buffer .= network === true ? Binary::writeVarInt(data) : ($this->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data)))
 
 
