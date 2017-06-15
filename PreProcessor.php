@@ -45,8 +45,19 @@ foreach(glob(THIS_PATH."/rules/*.h") as $file){
 	if(substr($file, -2) !== ".h"){
 		continue;
 	}
-	$code = str_replace(["::", "->", '$'], ["__STATIC_CALL__", "__METHOD_CALL__", "__VARIABLE_DOLLAR__"], file_get_contents($file));
-	file_put_contents(THIS_PATH."/processed/rules/".substr($file, strrpos($file, "/")), $code);
+
+	$lines = file($file);
+	foreach($lines as $n => &$line){
+		if(trim($line) === ""){
+			//Get rid of extra newlines
+			$line = "";
+			continue;
+		}
+
+		$line = str_replace(["::", "->", '$'], ["__STATIC_CALL__", "__METHOD_CALL__", "__VARIABLE_DOLLAR__"], $line);
+	}
+
+	file_put_contents(THIS_PATH."/processed/rules/".substr($file, strrpos($file, "/")), implode("", $lines));
 }
 
 foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $path => $f){
