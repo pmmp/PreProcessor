@@ -2,8 +2,8 @@ use pocketmine\utils\Binary;
 
 #define $nbt->put(data) ($nbt->buffer .= data)
 
-#define $nbt->getLong() ($nbt->endianness === 1 ? Binary::readLong($nbt->get(8)) : Binary::readLLong($nbt->get(8)))
-#define $nbt->putLong(data) ($nbt->buffer .= $nbt->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data))
+#define $nbt->getLong(network) (network === true ? Binary::readVarLong($nbt->buffer, $nbt->offset) : ($nbt->endianness === 1 ? Binary::readLong($nbt->get(8)) : Binary::readLLong($nbt->get(8))))
+#define $nbt->putLong(data, network) ($nbt->buffer .= network === true ? Binary::writeVarLong(data) : ($nbt->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data)))
 
 #define $nbt->getInt(network) (network === true ? Binary::readVarInt($nbt->buffer, $nbt->offset) : ($nbt->endianness === 1 ? Binary::readInt($nbt->get(4)) : Binary::readLInt($nbt->get(4))))
 #define $nbt->putInt(data, network) ($nbt->buffer .= network === true ? Binary::writeVarInt(data) : ($nbt->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data)))
@@ -23,8 +23,8 @@ use pocketmine\utils\Binary;
 
 #define $this->put(data) ($this->buffer .= data)
 
-#define $this->getLong() ($this->endianness === 1 ? Binary::readLong($this->get(8)) : Binary::readLLong($this->get(8)))
-#define $this->putLong(data) ($this->buffer .= $this->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data))
+#define $this->getLong(network) (network === true ? Binary::readVarLong($this->buffer, $this->offset) : ($this->endianness === 1 ? Binary::readLong($this->get(8)) : Binary::readLLong($this->get(8))))
+#define $this->putLong(data, network) ($this->buffer .= network === true ? Binary::writeVarLong(data) : ($this->endianness === 1 ? Binary::writeLong(data) : Binary::writeLLong(data)))
 
 #define $this->getInt(network) (network === true ? Binary::readVarInt($this->buffer, $this->offset) : ($this->endianness === 1 ? Binary::readInt($this->get(4)) : Binary::readLInt($this->get(4))))
 #define $this->putInt(data, network) ($this->buffer .= network === true ? Binary::writeVarInt(data) : ($this->endianness === 1 ? Binary::writeInt(data) : Binary::writeLInt(data)))
