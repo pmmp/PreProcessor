@@ -24,7 +24,7 @@
 #define Binary::writeLInt(data) (pack("V", data))
 
 #define Binary::writeLong(data) (pack("NN", data >> 32, data & 0xFFFFFFFF))
-#define Binary::writeLLong(data) (pack("VV", data >> 32, data & 0xFFFFFFFF))
+#define Binary::writeLLong(data) (pack("VV", data & 0xFFFFFFFF, data >> 32))
 
 #define Binary::readFloat(data) (ENDIANNESS === 0 ? unpack("f", data)[1] : unpack("f", strrev(data))[1])
 #define Binary::readRoundedFloat(data, accuracy) (round(Binary::readFloat(data), accuracy))
