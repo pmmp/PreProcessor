@@ -1,5 +1,3 @@
-use raklib\Binary;
+use pocketmine\utils\Binary;
 
 #include <rules/BinaryIO.h>
-
-#define $this->getShort(false) (Binary::readShort($this->get(2)))
