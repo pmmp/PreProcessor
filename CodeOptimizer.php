@@ -80,7 +80,6 @@ function getBefore(array $tree, $current){
 }
 
 
-
 function recreateTree($tree){
 	$output = "";
 
