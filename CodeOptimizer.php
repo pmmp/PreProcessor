@@ -7,10 +7,23 @@ if(!isset($opts["path"])){
 }
 
 $path = realpath($opts["path"]);
+if($path === false){
+	exit("Path " . $opts["path"] . " does not exist");
+}
 
-foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $path => $f){
+if(is_dir($path)){
+	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $path => $f){
+		processFile($path);
+	}
+}elseif(is_file($path)){
+	processFile($path);
+}else{
+	die("Bad path $path");
+}
+
+function processFile(string $path) : void{
 	if(substr($path, -4) !== ".php"){
-		continue;
+		return;
 	}
 	$oldTree = $tree = token_get_all(file_get_contents($path));
 	fastOptimize($tree);
