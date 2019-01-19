@@ -9,9 +9,3 @@ This script uses the C preprocessor to pre-process PocketMine-MP source code bef
 #### Arguments
 - `path`: Path to the PocketMine-MP source code to optimize.
 - `multisize`: Whether to produce multiple optimized code versions with optimizations specific to 64-bit or 32-bit platforms. Where applicable, multiple versions of target source files will be produced with different optimizations (for example, `Player__64bit.php`, `Player__32bit.php`). The autoloader in PocketMine-MP will then decide which version of the source file to load at runtime based on the platform.
-
-### CodeOptimizer.php
-This script performs basic optimization of constant references and function calls by adding backslashes (`\`) in front of global constant references and function calls.
-
-#### Arguments
-- `path`: Path the the PocketMine-MP source code to optimize.
