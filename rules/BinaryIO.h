@@ -3,8 +3,8 @@
 #define $this->putBool(data) ($this->buffer .= Binary::writeBool(data))
 #define $this->getBool() (Binary::readBool($this->get(1)))
 
-#define $this->getByte() (ord($this->get(1)))
-#define $this->putByte(data) ($this->buffer .= chr(data))
+#define $this->getByte() (\ord($this->get(1)))
+#define $this->putByte(data) ($this->buffer .= \chr(data))
 
 #define $this->getShort() (Binary::readShort($this->get(2)))
 #define $this->getSignedShort() (Binary::readSignedShort($this->get(2)))
