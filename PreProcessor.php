@@ -32,10 +32,13 @@ function process($code, array $extraDefine = []){
 	fclose($pipes[1]);
 	$error = stream_get_contents($pipes[2]);
 	if(trim($error) != ""){
-		fwrite(STDERR, $error);
+		throw new \RuntimeException("Failed to preprocess code: $error");
 	}
 	fclose($pipes[2]);
 	proc_close($process);
+	if($out === "" or $out === false){
+		throw new \RuntimeException("Preprocessor returned empty output");
+	}
 
 	return substr($out, strpos($out, "<?php"));
 }
