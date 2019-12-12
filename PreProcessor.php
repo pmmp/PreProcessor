@@ -5,6 +5,7 @@ define("THIS_PATH", realpath(dirname(__FILE__)));
 $opts = getopt("", ["path:", "multisize"]);
 
 if(!isset($opts["path"])){
+	echo "Provide a path to process using --path" . PHP_EOL;
 	exit(1);
 }
 
