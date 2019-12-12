@@ -2,14 +2,12 @@
 
 define("THIS_PATH", realpath(dirname(__FILE__)));
 
-$opts = getopt("", ["path:", "multisize"]);
+$opts = getopt("", ["path:"]);
 
 if(!isset($opts["path"])){
 	echo "Provide a path to process using --path" . PHP_EOL;
 	exit(1);
 }
-
-$isMultiSize = isset($opts["multisize"]);
 
 $path = realpath($opts["path"]);
 
@@ -76,23 +74,5 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as 
 	if(trim($oldCode) !== trim($code)){
 		echo "Processed $path\n";
 		file_put_contents($path, $code);
-
-		if($isMultiSize){
-			$bit64code = str_replace(["__STATIC_CALL__", "__METHOD_CALL__", "__VARIABLE_DOLLAR__", "__STARTING_COMMENT_BADLINE__"], ["::", "->", '$', " * |  _ \\ ___   ___| | _____| |_|  \\/  (_)_ __   ___      |  \\/  |  _ \\"],
-				process(str_replace(["::", "->", '$', " * |  _ \\ ___   ___| | _____| |_|  \\/  (_)_ __   ___      |  \\/  |  _ \\"], ["__STATIC_CALL__", "__METHOD_CALL__", "__VARIABLE_DOLLAR__", "__STARTING_COMMENT_BADLINE__"], $oldCode), ["COMPILE_64" => 1])
-			);
-			if(trim($code) === trim($bit64code)){
-				continue;
-			}
-
-			$bit32code = str_replace(["__STATIC_CALL__", "__METHOD_CALL__", "__VARIABLE_DOLLAR__", "__STARTING_COMMENT_BADLINE__"], ["::", "->", '$', " * |  _ \\ ___   ___| | _____| |_|  \\/  (_)_ __   ___      |  \\/  |  _ \\"],
-				process(str_replace(["::", "->", '$', " * |  _ \\ ___   ___| | _____| |_|  \\/  (_)_ __   ___      |  \\/  |  _ \\"], ["__STATIC_CALL__", "__METHOD_CALL__", "__VARIABLE_DOLLAR__", "__STARTING_COMMENT_BADLINE__"], $oldCode), ["COMPILE_32" => 1])
-			);
-			if(trim($bit32code) !== trim($bit64code)){
-				echo "Processed multisize $path\n";
-				file_put_contents(substr($path, 0, -4) . "__64bit.php", $bit64code);
-				file_put_contents(substr($path, 0, -4) . "__32bit.php", $bit32code);
-			}
-		}
 	}
 }
