@@ -33,7 +33,7 @@ function process($code, array $extraDefine = []){
 	fclose($pipes[0]);
 	$out = stream_get_contents($pipes[1]);
 	fclose($pipes[1]);
-	$error = stream_get_contents($pipes[2]);
+	$error = @stream_get_contents($pipes[2]);
 	if(trim($error) != ""){
 		throw new \RuntimeException("Failed to preprocess code: $error");
 	}
