@@ -10,6 +10,10 @@ if(!isset($opts["path"])){
 }
 
 $path = realpath($opts["path"]);
+if($path === false){
+	fwrite(STDERR, "Path " . $opts["path"] . " does not exist or permission denied" . PHP_EOL);
+	exit(1);
+}
 
 function process($code, array $extraDefine = []){
 	$descriptor = [
