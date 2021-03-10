@@ -80,5 +80,11 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as 
 	if(trim($oldCode) !== trim($code)){
 		echo "Processed $path\n";
 		file_put_contents($path, $code);
+		exec(PHP_BINARY . ' -l ' . $path, $output, $exitCode);
+		if($exitCode !== 0){
+			fwrite(STDERR, "Preprocessor broke file $path\n");
+			fwrite(STDERR, implode("\n", $output));
+			exit(1);
+		}
 	}
 }
