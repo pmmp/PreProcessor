@@ -10,6 +10,10 @@ if(!isset($opts["path"])){
 }
 
 $path = realpath($opts["path"]);
+if($path === false){
+	fwrite(STDERR, "Path " . $opts["path"] . " does not exist or permission denied" . PHP_EOL);
+	exit(1);
+}
 
 function process($code, array $extraDefine = []){
 	$descriptor = [
@@ -29,7 +33,7 @@ function process($code, array $extraDefine = []){
 	fclose($pipes[0]);
 	$out = stream_get_contents($pipes[1]);
 	fclose($pipes[1]);
-	$error = stream_get_contents($pipes[2]);
+	$error = @stream_get_contents($pipes[2]);
 	if(trim($error) != ""){
 		throw new \RuntimeException("Failed to preprocess code: $error");
 	}
@@ -67,6 +71,7 @@ foreach(glob(THIS_PATH . "/rules/*.h") as $file){
  * we keep this for backwards compatibility so that the preprocessor doesn't die if used on an older version
  * this header used to contain optimisations that were useful a very long time ago, but have since become obsolete.
  */
+@unlink(THIS_PATH . '/processed/rules/NBT.h');
 @touch(THIS_PATH . '/processed/rules/NBT.h');
 
 foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $path => $f){
@@ -80,5 +85,11 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as 
 	if(trim($oldCode) !== trim($code)){
 		echo "Processed $path\n";
 		file_put_contents($path, $code);
+		exec(PHP_BINARY . ' -l ' . $path, $output, $exitCode);
+		if($exitCode !== 0){
+			fwrite(STDERR, "Preprocessor broke file $path\n");
+			fwrite(STDERR, implode("\n", $output));
+			exit(1);
+		}
 	}
 }
