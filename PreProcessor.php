@@ -67,6 +67,7 @@ foreach(glob(THIS_PATH . "/rules/*.h") as $file){
  * we keep this for backwards compatibility so that the preprocessor doesn't die if used on an older version
  * this header used to contain optimisations that were useful a very long time ago, but have since become obsolete.
  */
+@unlink(THIS_PATH . '/processed/rules/NBT.h');
 @touch(THIS_PATH . '/processed/rules/NBT.h');
 
 foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $path => $f){
