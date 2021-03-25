@@ -67,13 +67,6 @@ foreach(glob(THIS_PATH . "/rules/*.h") as $file){
 	file_put_contents(THIS_PATH . "/processed/rules/" . substr($file, strrpos($file, "/")), implode("", $lines));
 }
 
-/*
- * we keep this for backwards compatibility so that the preprocessor doesn't die if used on an older version
- * this header used to contain optimisations that were useful a very long time ago, but have since become obsolete.
- */
-@unlink(THIS_PATH . '/processed/rules/NBT.h');
-@touch(THIS_PATH . '/processed/rules/NBT.h');
-
 foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $path => $f){
 	if(substr($path, -4) !== ".php"){
 		continue;
